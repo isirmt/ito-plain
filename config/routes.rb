@@ -2,16 +2,14 @@ Rails.application.routes.draw do
   devise_for :users, skip: [ :registrations ]
   root "spa#public"
 
+  get "/d", to: "spa#public"
   get "/d/:id", to: "spa#public"
-
-  authenticated :user do
-    get "/my", to: "spa#private"
-    get "/my/*path", to: "spa#private"
-  end
+  get "/my", to: "spa#private"
+  get "/my/*path", to: "spa#private"
 
   namespace :api do
     resources :items, only: [:index, :show]
-    resources :session, only: [:show]
+    resource :session, only: [:show]
 
     namespace :my do
       resources :items
