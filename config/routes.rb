@@ -10,9 +10,5 @@ Rails.application.routes.draw do
   namespace :api do
     resources :items, only: [:index, :show]
     resource :session, only: [:show]
-
-    namespace :my do
-      resources :items
-    end
   end
 end
