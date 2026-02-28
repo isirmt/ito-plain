@@ -5,10 +5,9 @@ import App from "../components/App"
 
 const mount = () => {
   const container = document.getElementById("root")
-
   if (!container) return
 
-  createRoot(container).render(React.createElement(App))
+  createRoot(container).render(<App />)
 }
 
 if (document.readyState === "loading") {

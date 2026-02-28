@@ -28,6 +28,9 @@
     "webpack-subresource-integrity": "^5.1.0"
   },
   "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3",
     "webpack-dev-server": "^5.2.3"
   },
   "babel": {
