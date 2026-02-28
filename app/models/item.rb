@@ -1,6 +1,7 @@
 class Item < ApplicationRecord
   has_many :item_taggings, dependent: :destroy
   has_many :tags, through: :item_taggings
+  belongs_to :user
 
   enum :status, {
     draft: 0,
