@@ -1,3 +1,5 @@
+# slugがidとして渡されることを想定
+
 class Api::ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :set_item, only: [:show, :update, :destroy]

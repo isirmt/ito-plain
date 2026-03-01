@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "/my/*path", to: "spa#private"
 
   namespace :api do
-    resources :items, only: [:index, :show]
+    resources :items, only: [:index, :show, :create, :update, :destroy]
     resource :session, only: [:show]
   end
 end
