@@ -38,7 +38,7 @@ export default function ItemListPage() {
   }, []);
 
   return (
-    <main>
+    <div className="w-full relative">
       <div>
         {isLoading && <div>loading</div>}
         {error && <div>{error}</div>}
@@ -51,6 +51,6 @@ export default function ItemListPage() {
           </Link>
         ))}
       </div>
-    </main>
+    </div>
   )
 }

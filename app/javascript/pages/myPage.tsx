@@ -3,8 +3,8 @@ import React from "react"
 
 export default function MyPage() {
   return (
-    <main>
+    <div className="w-full relative">
 
-    </main>
+    </div>
   )
 }
