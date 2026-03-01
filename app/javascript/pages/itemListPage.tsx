@@ -12,13 +12,13 @@ type ItemResponse = {
 
 export default function ItemListPage() {
   const [items, setItems] = useState<ItemResponse[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchItems = async () => {
       setError(null);
-      setLoading(true);
+      setIsLoading(true);
       try {
         const response = await fetch("/api/items");
         if (!response.ok) {
@@ -31,7 +31,7 @@ export default function ItemListPage() {
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
     fetchItems();
@@ -40,7 +40,7 @@ export default function ItemListPage() {
   return (
     <main>
       <div>
-        {loading && <div>loading</div>}
+        {isLoading && <div>loading</div>}
         {error && <div>{error}</div>}
         {items.map(item => (
           <Link key={item.id} to={{
