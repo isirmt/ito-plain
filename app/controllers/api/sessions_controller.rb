@@ -5,7 +5,7 @@ class Api::SessionsController < ApplicationController
         signed_in: true,
         user: {
           id: current_user.id,
-          email: current_user.email
+          username: current_user.username
         }
       }
     else

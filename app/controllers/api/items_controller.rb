@@ -19,7 +19,7 @@ class Api::ItemsController < ApplicationController
           only: [:id, :name, :slug]
         },
         user: {
-          only: [:id, :email]
+          only: [:id, :username]
         }
       }
     ), status: :ok
@@ -38,7 +38,7 @@ class Api::ItemsController < ApplicationController
             only: [:id, :name, :slug]
           },
           user: {
-            only: [:id, :email]
+            only: [:id, :username]
           }
         }
       ), status: :created
@@ -62,7 +62,7 @@ class Api::ItemsController < ApplicationController
             only: [:id, :name, :slug]
           },
           user: {
-            only: [:id, :email]
+            only: [:id, :username]
           }
         }
       ), status: :ok
