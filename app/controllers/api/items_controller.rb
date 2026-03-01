@@ -3,18 +3,15 @@ class Api::ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
 
   def index
-    items = Item.where(status: :published).order(created_at: :desc)
+    items = policy_scope(Item).order(created_at: :desc)
     render json: items.as_json(
       only: [:id, :slug, :title, :description, :status, :created_at, :updated_at]
     )
   end
 
   def show
-    can_access = @item.published? || (user_signed_in? && @item.user_id == current_user.id)
-    unless can_access
-      render json: { error: "Unauthorized" }, status: :unauthorized
-      return
-    end
+    authorize @item
+
     render json: @item.as_json(
       only: [:id, :slug, :title, :description, :html, :css, :js, :status, :created_at, :updated_at],
       include: {
@@ -29,6 +26,8 @@ class Api::ItemsController < ApplicationController
   end
 
   def create
+    authorize Item
+
     item = current_user.items.build(item_params)
 
     if item.save
@@ -48,10 +47,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def update
-    unless is_owner?(@item)
-      render json: { error: "Unauthorized" }, status: :unauthorized
-      return
-    end
+    authorize @item
 
     if @item.update(item_params)
       render json: @item.as_json(
@@ -70,10 +66,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def destroy
-    unless is_owner?(@item)
-      render json: { error: "Unauthorized" }, status: :unauthorized
-      return
-    end
+    authorize @item
 
     @item.destroy
     head :no_content
@@ -95,9 +88,5 @@ class Api::ItemsController < ApplicationController
       :js,
       :status,
     )
-  end
-
-  def is_owner?(item)
-    user_signed_in? && item.user_id == current_user.id
   end
 end
