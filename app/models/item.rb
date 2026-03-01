@@ -9,6 +9,5 @@ class Item < ApplicationRecord
     archived: 2
   }
 
-  validates :slug, :title, presence: true
-  validates :slug, uniqueness: true
+  validates :title, presence: true
 end

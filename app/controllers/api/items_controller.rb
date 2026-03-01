@@ -1,5 +1,3 @@
-# slugがidとして渡されることを想定
-
 class Api::ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :set_item, only: [:show, :update, :destroy]
@@ -7,7 +5,7 @@ class Api::ItemsController < ApplicationController
   def index
     items = policy_scope(Item).order(created_at: :desc)
     render json: items.as_json(
-      only: [:id, :slug, :title, :description, :status, :created_at, :updated_at]
+      only: [:id, :title, :description, :status, :created_at, :updated_at]
     )
   end
 
@@ -15,7 +13,7 @@ class Api::ItemsController < ApplicationController
     authorize @item
 
     render json: @item.as_json(
-      only: [:id, :slug, :title, :description, :html, :css, :js, :status, :created_at, :updated_at],
+      only: [:id, :title, :description, :html, :css, :js, :status, :created_at, :updated_at],
       include: {
         tags: {
           only: [:id, :name, :slug]
@@ -85,12 +83,11 @@ class Api::ItemsController < ApplicationController
   private
 
   def set_item
-    @item = Item.find_by!(slug: params[:id])
+    @item = Item.find(params[:id])
   end
 
   def item_attributes
     params.require(:item).permit(
-      :slug,
       :title,
       :description,
       :html,

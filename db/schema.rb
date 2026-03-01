@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_28_100427) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_01_081011) do
   create_table "item_taggings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "item_id", null: false
@@ -27,12 +27,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_28_100427) do
     t.text "description"
     t.text "html"
     t.text "js"
-    t.string "slug", null: false
     t.integer "status", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
-    t.index ["slug"], name: "index_items_on_slug", unique: true
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
