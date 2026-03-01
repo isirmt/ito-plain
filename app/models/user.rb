@@ -4,5 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
 
-  has_many :items, dependent: :nullify
+  has_many :items, dependent: :restrict_with_exception
 end

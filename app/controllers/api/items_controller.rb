@@ -28,7 +28,8 @@ class Api::ItemsController < ApplicationController
   def create
     authorize Item
 
-    item = current_user.items.build(item_params)
+    item = current_user.items.build(item_attributes)
+    assign_tag_ids(item)
 
     if item.save
       render json: item.as_json(
@@ -44,12 +45,17 @@ class Api::ItemsController < ApplicationController
     else
       render json: { errors: item.errors.full_messages }, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: ["tag(s) not found"] }, status: :unprocessable_entity
   end
 
   def update
     authorize @item
 
-    if @item.update(item_params)
+    @item.assign_attributes(item_attributes)
+    assign_tag_ids(@item)
+
+    if @item.save
       render json: @item.as_json(
         include: {
           tags: {
@@ -63,6 +69,8 @@ class Api::ItemsController < ApplicationController
     else
       render json: { errors: @item.errors.full_messages }, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { errors: ["tag(s) not found"] }, status: :unprocessable_entity
   end
 
   def destroy
@@ -78,7 +86,7 @@ class Api::ItemsController < ApplicationController
     @item = Item.find_by!(slug: params[:id])
   end
 
-  def item_params
+  def item_attributes
     params.require(:item).permit(
       :slug,
       :title,
@@ -86,7 +94,20 @@ class Api::ItemsController < ApplicationController
       :html,
       :css,
       :js,
-      :status,
+      :status
     )
+  end
+
+  # tag_idsをparamsから取得
+  def tag_ids
+    return unless params[:item]&.key?(:tag_ids)
+
+    params.require(:item).permit(tag_ids: [])[:tag_ids]
+  end
+
+  def assign_tag_ids(item)
+    return if tag_ids.nil?
+
+    item.tag_ids = tag_ids
   end
 end
