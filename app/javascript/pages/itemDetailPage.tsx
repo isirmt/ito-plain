@@ -87,7 +87,7 @@ export default function ItemDetailPage() {
                   </head>
                   <body>
                     ${item.html}
-                    <script>${item.js}<\/script>
+                    <script>${item.js}</script>
                   </body>
                 </html>
               `}

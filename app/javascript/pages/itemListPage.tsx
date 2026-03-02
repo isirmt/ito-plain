@@ -39,15 +39,14 @@ export default function ItemListPage() {
 
   return (
     <div className="w-full relative">
-      <div>
-        {isLoading && <div>loading</div>}
-        {error && <div>{error}</div>}
+      {isLoading && <div>loading</div>}
+      {error && <div>{error}</div>}
+      <div className="flex flex-wrap gap-8 w-full relative p-20">
         {items.map(item => (
           <Link key={item.id} to={{
             pathname: `/d/${item.id}`,
           }}>
-            <div>{item.title}</div>
-            <div>{item.description}</div>
+            <div className="bg-gray-100 size-60" />
           </Link>
         ))}
       </div>
