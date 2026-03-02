@@ -5,6 +5,8 @@ type ItemResponse = {
   id: number
   title: string
   description: string
+  html: string
+  css: string
   status: number
   createdAt: string
   updatedAt: string
@@ -46,7 +48,20 @@ export default function ItemListPage() {
           <Link key={item.id} to={{
             pathname: `/d/${item.id}`,
           }}>
-            <div className="bg-gray-100 size-60" />
+            <iframe
+                className="size-60 border border-[#e0e0e0] rounded-xl"
+                title="preview"
+                srcDoc={`
+                <html>
+                  <head>
+                    <style>${item.css}</style>
+                  </head>
+                  <body>
+                    ${item.html}
+                  </body>
+                </html>
+              `}
+              />
           </Link>
         ))}
       </div>

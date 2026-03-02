@@ -5,7 +5,7 @@ class Api::ItemsController < ApplicationController
   def index
     items = policy_scope(Item).order(created_at: :desc)
     render json: items.as_json(
-      only: [:id, :title, :description, :status, :created_at, :updated_at]
+      only: [:id, :title, :description, :html, :css, :status, :created_at, :updated_at]
     )
   end
 
