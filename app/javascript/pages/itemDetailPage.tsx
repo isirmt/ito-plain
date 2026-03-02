@@ -77,7 +77,7 @@ export default function ItemDetailPage() {
           <div className="flex gap-10 items-end justify-center">
             <div>
               <iframe
-                className="size-120 border border-[#e0e0e0] rounded-2xl"
+                className="size-60 border border-[#e0e0e0] rounded-xl"
                 title="preview"
                 srcDoc={`
                 <html>
