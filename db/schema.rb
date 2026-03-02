@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_28_023240) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_01_091723) do
   create_table "item_taggings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "item_id", null: false
@@ -27,11 +27,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_28_023240) do
     t.text "description"
     t.text "html"
     t.text "js"
-    t.string "slug", null: false
     t.integer "status", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
-    t.index ["slug"], name: "index_items_on_slug", unique: true
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -43,6 +43,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_28_023240) do
     t.index ["slug"], name: "index_tags_on_slug", unique: true
   end
 
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
+    t.datetime "updated_at", null: false
+    t.string "username", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
   add_foreign_key "item_taggings", "items"
   add_foreign_key "item_taggings", "tags"
+  add_foreign_key "items", "users"
 end
