@@ -20,7 +20,6 @@ type ItemResponse = {
   description: string
   html: string
   css: string
-  js: string
   status: number
   createdAt: string
   updatedAt: string
@@ -87,7 +86,6 @@ export default function ItemDetailPage() {
                   </head>
                   <body>
                     ${item.html}
-                    <script>${item.js}</script>
                   </body>
                 </html>
               `}

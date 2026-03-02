@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_01_091723) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_02_014755) do
   create_table "item_taggings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "item_id", null: false
@@ -26,7 +26,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_01_091723) do
     t.text "css"
     t.text "description"
     t.text "html"
-    t.text "js"
     t.integer "status", default: 0, null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false

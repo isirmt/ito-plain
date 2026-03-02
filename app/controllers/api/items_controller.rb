@@ -13,7 +13,7 @@ class Api::ItemsController < ApplicationController
     authorize @item
 
     render json: @item.as_json(
-      only: [:id, :title, :description, :html, :css, :js, :status, :created_at, :updated_at],
+      only: [:id, :title, :description, :html, :css, :status, :created_at, :updated_at],
       include: {
         tags: {
           only: [:id, :name, :slug]
@@ -92,7 +92,6 @@ class Api::ItemsController < ApplicationController
       :description,
       :html,
       :css,
-      :js,
       :status
     )
   end
