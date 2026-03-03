@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, skip: [ :registrations ]
+  devise_for :users,
+    skip: [ :registrations ],
+    path: "",
+    path_names: {
+      sign_in: "sign-in",
+      sign_out: "sign-out"
+    }
   root "spa#public"
 
   get "/d", to: "spa#public"
