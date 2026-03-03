@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { ArrowLeftIcon } from "@heroicons/react/24/solid"
+import { ArrowLeftIcon, CodeBracketIcon } from "@heroicons/react/24/solid"
+import { codeToHtml } from "shiki/bundle/web"
 
 import { Link, useParams } from "react-router-dom"
 
@@ -31,12 +32,12 @@ export default function ItemDetailPage() {
   const { id } = useParams();
   const itemId = id ? Number(id) : null;
   const [item, setItem] = useState<ItemResponse | null>(null);
+  const [highlightedHtml, setHighlightedHtml] = useState("");
+  const [highlightedCss, setHighlightedCss] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!itemId) return;
-
     const fetchItem = async () => {
       try {
         const response = await fetch(`/api/items/${itemId}`);
@@ -55,7 +56,32 @@ export default function ItemDetailPage() {
     }
 
     fetchItem();
-  }, [])
+  }, [itemId])
+
+  useEffect(() => {
+    if (!item) {
+      setHighlightedHtml("");
+      setHighlightedCss("");
+      return;
+    }
+
+    const highlightCode = async () => {
+      const [html, css] = await Promise.all([
+        codeToHtml(item.html, {
+          lang: "html",
+          theme: "one-light"
+        }),
+        codeToHtml(item.css, {
+          lang: "css",
+          theme: "one-light"
+        })
+      ]);
+      setHighlightedHtml(html);
+      setHighlightedCss(css);
+    }
+
+    highlightCode();
+  }, [item])
 
   return (
     <div className="w-full relative">
@@ -95,6 +121,28 @@ export default function ItemDetailPage() {
               <h1 className="text-4xl font-black">{item.title}</h1>
               <p className="font-bold">{item.description}</p>
               <p>@{item.user.username}</p>
+            </div>
+          </div>
+          <div className="flex justify-center gap-4 mt-10">
+            <div className="w-120">
+              <h2 className="text-lg bg-[#e6e6e6] leading-none rounded-t-lg gap-1 py-2 flex justify-center items-center text-[#444] font-bold w-full text-center">
+                <CodeBracketIcon className="size-5 mt-0.5" />
+                HTML
+              </h2>
+              <div
+                className="overflow-x-auto min-h-72 p-2 bg-[#fafafa] border-[#e0e0e0]"
+                dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+              />
+            </div>
+            <div className="w-120">
+              <h2 className="text-lg bg-[#e6e6e6] leading-none rounded-t-lg gap-1 py-2 flex justify-center items-center text-[#444] font-bold w-full text-center">
+                <CodeBracketIcon className="size-5 mt-0.5" />
+                CSS
+              </h2>
+              <div
+                className="overflow-x-auto min-h-72 p-2 bg-[#fafafa] border-[#e0e0e0]"
+                dangerouslySetInnerHTML={{ __html: highlightedCss }}
+              />
             </div>
           </div>
         </section>

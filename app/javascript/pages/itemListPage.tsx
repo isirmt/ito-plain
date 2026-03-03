@@ -50,7 +50,7 @@ export default function ItemListPage() {
           }}>
             <iframe
                 sandbox=""
-                className="size-60 pointer-events-none border border-[#e0e0e0] rounded-xl"
+                className="size-60 select-none pointer-events-none border border-[#e0e0e0] rounded-xl"
                 title="preview"
                 srcDoc={`
                 <html>
