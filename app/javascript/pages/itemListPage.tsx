@@ -43,13 +43,14 @@ export default function ItemListPage() {
     <div className="w-full relative">
       {isLoading && <div>loading</div>}
       {error && <div>{error}</div>}
-      <div className="flex flex-wrap gap-8 w-full relative p-20">
+      <div className="flex flex-wrap gap-8 w-full relative p-20 lg:px-40">
         {items.map(item => (
           <Link key={item.id} to={{
             pathname: `/d/${item.id}`,
           }}>
             <iframe
-                className="size-60 border border-[#e0e0e0] rounded-xl"
+                sandbox=""
+                className="size-60 pointer-events-none border border-[#e0e0e0] rounded-xl"
                 title="preview"
                 srcDoc={`
                 <html>
